@@ -1,4 +1,5 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,7 @@ using System;
 
 namespace MVC.CRUD.Interface.Controllers;
 
+[Authorize]
 public class ClientsController : Controller
 {
     private readonly MVC.CRUD.Interface.ServiceHelpers.IClientService _clientsService;

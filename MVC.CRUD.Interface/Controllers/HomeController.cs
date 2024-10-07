@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MVC.CRUD.Interface.Models;
 using MVC.CRUD.Interface.Models.ViewModels;
@@ -5,6 +6,7 @@ using System.Diagnostics;
 
 namespace MVC.CRUD.Interface.Controllers;
 
+[Authorize]
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
