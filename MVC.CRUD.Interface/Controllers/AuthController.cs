@@ -96,7 +96,6 @@ public class AuthController : Controller
             if (!authResult.Successful)
             {
                 ModelState.AddModelError("", authResult.ErrorMessage);
-                _notyf.Error("Invalid login attempt.");
                 return View(model);
             }
             else if (authResult.Successful)
