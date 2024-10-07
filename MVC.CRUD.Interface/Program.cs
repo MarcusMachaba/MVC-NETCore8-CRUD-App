@@ -1,6 +1,7 @@
 using AspNetCoreHero.ToastNotification;
 using AspNetCoreHero.ToastNotification.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -43,14 +44,14 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
 builder.Services.AddControllersWithViews();
 
 
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-        .AddCookie(cookieOptions =>
-        {
-            cookieOptions.LoginPath = "/Auth/Signin/";
-            cookieOptions.ExpireTimeSpan = TimeSpan.FromMinutes(15);
-            cookieOptions.SlidingExpiration = true;
-            cookieOptions.AccessDeniedPath = "/Auth/AccessDenied";//"/Forbidden/";
-        });
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Auth/Signin/";
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(15);
+    options.SlidingExpiration = true;
+    options.AccessDeniedPath = "/Auth/AccessDenied";//"/Forbidden/";
+});
 
 builder.Services.AddNotyf(o =>
 {
