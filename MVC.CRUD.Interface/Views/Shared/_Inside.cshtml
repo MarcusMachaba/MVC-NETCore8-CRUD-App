@@ -20,7 +20,7 @@
                     <!-- The user image in the navbar-->
                     @if (actualStoreUser != null)
                     {
-                        @if (actualStoreUser.Result.ProfilePicture != null)
+                        @if (actualStoreUser?.Result?.ProfilePicture != null)
                         {
                             <img src="data:image/png;base64, @(actualStoreUser.Result.ProfilePicture)" class="user-image" alt="User Image">
                         }

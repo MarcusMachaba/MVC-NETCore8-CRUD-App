@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using MVC.CRUD.Interface.DAL;
 using MVC.CRUD.Interface.Models;
 using MVC.CRUD.Interface.Models.Entities;
+using MVC.CRUD.Interface.Models.ViewModels;
 using MVC.CRUD.Interface.UtilityHelpers;
 using System.Security.Claims;
 
@@ -40,18 +41,46 @@ public class AuthenticationService : IAuthenticationService
     {
         return MVC.CRUD.Interface.UtilityHelpers.Utility.GenerateJwtToken(user.UserName, "User");
     }
+    private (PasswordVerificationResult verificationResult, bool isMatch) PasswordHasherVerify(SigninViewModel userVM, User user)
+    {
+        //hash password:
+        var passwordHasher = new PasswordHasher<SigninViewModel>();
+        var hashedPassword = passwordHasher.HashPassword(userVM, userVM.Password);
 
+        //verify password during login:
+        var result = passwordHasher.VerifyHashedPassword(userVM, user.PasswordHash, userVM.Password);
+        if (result == PasswordVerificationResult.Success)
+        {
+            //Password is correct
+            return (result, true);
+        }
+        else
+        {
+            //Invalid password
+            return (result, false);
+        }
+    }
     public async Task<WebResponse<User>> AutenticateUser(string username, string password, bool rememberMe, string returnUrl)
     {
         try
         {
             var user = await _userManager.FindByNameAsync(username);
             //if (user == null || !ApplicationPasswordEncryption.PasswordIsMatch(password, user.PasswordHash))
-            //    return new WebResponse<ClientPortalUser>
+            //    return new WebResponse<User>
             //    {
             //        Successful = false,
             //        ErrorMessage = "Invalid Login Credentials"
             //    };
+            if (user != null) 
+            { 
+                var results = PasswordHasherVerify(new SigninViewModel { Email=username, Password=password, RememberMe=rememberMe}, user);
+                if (user.UserName.Equals(username) && !results.isMatch && (results.verificationResult == PasswordVerificationResult.Failed || results.verificationResult == PasswordVerificationResult.SuccessRehashNeeded))
+                    return new WebResponse<User>
+                    {
+                        Successful = false,
+                        ErrorMessage = "Invalid Login Credentials/Attempt"
+                    };
+            }
             if (user == null)
             {
                 _notyf.Error("Email / Username Not Found.");
@@ -111,7 +140,7 @@ public class AuthenticationService : IAuthenticationService
                 if (twoFactorEnabled)//result.RequiresTwoFactor
                 {
                     _logger.LogInformation("Login requires two-factor auth.");
-                    //RedirectToAction("LoginWith2fa", "Account", new { returnUrl, rememberMe });
+                    //RedirectToAction("LoginWith2fa", "Auth", new { returnUrl, rememberMe });
 
                 }
                 if (await _userManager.IsLockedOutAsync(user))//result.IsLockedOut
@@ -121,7 +150,7 @@ public class AuthenticationService : IAuthenticationService
                     //context.Response.Redirect(urlHelper.Action(actionName), false);
                     _notyf.Warning("User account locked out.");
                     _logger.LogWarning("User account is locked out.");
-                    //RedirectToAction("Lockout", "Account");
+                    //RedirectToAction("Lockout", "Auth");
                 }
                 return new WebResponse<User>
                 {
@@ -145,19 +174,9 @@ public class AuthenticationService : IAuthenticationService
             var stringPassword = model.PasswordHash;
             model.PasswordHash = ApplicationPasswordEncryption.EncryptPassword(model.PasswordHash);
             await _userRepository.InsertAsync(model);
-            //model.Application.ClientUserId = addedClient.Id;
-            //var addedApplication = await _repository.AddAsync(model.Application);
             var addedUser = _userRepository.Search(x=>x.Id == model.Id).ToList();
             if (!string.IsNullOrEmpty(addedUser.FirstOrDefault()?.FirstName))
             {
-                //var mailSent = await _mailMessagingService.SendAccountCreatedMailMessage(addedClient, stringPassword, addedApplication);
-                //await _cacheRepository.CacheItem(GenerateUserCacheKey(addedUser.ClientSystemId), addedUser);
-
-                //var applications = (await _cacheRepository.GetCachedItemsList<ClientApiApplication>(nameof(ClientApiApplication))).ToList();
-                //applications.Add(addedApplication);
-                //await _cacheRepository.CacheItemList(nameof(ClientApiApplication), applications);
-
-                //return ($"Client Application Successfully Created, {(mailSent ? "Credentials Have been mailed" : "Credential mail sending failed, Password is " + stringPassword)}", true);
                 return ($"User Successfully Created", true);
             }
             return ("There was an error adding the data to the database", false);

@@ -9,9 +9,12 @@ using Microsoft.Extensions.Hosting;
 using MVC.CRUD.Interface.DAL;
 using MVC.CRUD.Interface.Models.Entities;
 using MVC.CRUD.Interface.ServiceHelpers;
+using MVC.CRUD.Interface.UtilityHelpers;
 using System.Xml.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
+
+ConfigureSetup();
 
 // Add services to the container.
 builder.Services.AddDbContext<CRUDContext>(options =>
@@ -110,3 +113,11 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.Run();
+
+
+void ConfigureSetup()
+{
+    //AppPasswordEncryption
+    var encryptionKey = builder.Configuration["EncryptionKey"];
+    ApplicationPasswordEncryption.SetPasswordEncruptionKey(encryptionKey);
+}
