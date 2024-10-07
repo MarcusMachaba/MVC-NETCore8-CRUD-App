@@ -57,9 +57,13 @@
                                 <a href="#" class="btn btn-default btn-flat">Profile</a>
                           </div>
                           <div class="pull-right">
-                                <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                <form  class="form-inline" asp-controller="Auth" asp-action="Signout" asp-route-returnUrl="@Url.Action("Signin", "Auth", new { area = "" })">
                                      @Html.AntiForgeryToken()
                                     <button  type="submit" class="btn btn-danger btn-flat">Sign out</button>
+                                    @* <input type="submit" value="Sign out" class="btn btn-danger btn-flat"> *@
+                                    @* <a href="@Url.Action("Signin","Auth")" class="btn btn-danger btn-flat">
+                                        Signout
+                                    </a> *@
                                  </form>
                           </div>
                      </li>
@@ -70,8 +74,8 @@
 else
 {
     @*<ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        <li>@Html.ActionLink("Register", "Signup", "Auth", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Log in", "Signin", "Auth", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
     </ul>*@
 
     @*<h5>Helloo your User.Identity.IsAuthenticated didnt work</h5>*@

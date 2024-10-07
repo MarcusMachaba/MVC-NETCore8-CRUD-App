@@ -59,18 +59,20 @@ public class AuthController : Controller
     }
 
     //Login GET
-    public IActionResult Signin(string? returnUrl = null)
+    public IActionResult Signin(string returnUrl = null)
     {
+        ViewData["ReturnUrl"] = returnUrl;
         return View();
     }
 
     //Login POST
     [HttpPost, AllowAnonymous, ValidateAntiForgeryToken]
-    public async Task<IActionResult> Signin(SigninViewModel model, string? returnUrl = null)
+    public async Task<IActionResult> Signin(SigninViewModel model, string returnUrl = null)
     {
         try
         {
-            ViewData["ReturnUrl"] = returnUrl;
+            returnUrl ??= Url.Content("~/");
+
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -99,12 +101,8 @@ public class AuthController : Controller
             }
             else if (authResult.Successful)
             {
-                //return RedirectToLocal(returnUrl);
-                //return await LoginSuccess(authResult.Data, HttpContext);
-
                 _notyf.Success($"Logged in as {authResult.Data.Email}.");
-                //Just redirect to our profile after logging in.
-                return RedirectToAction("Index", "CLients");
+                return returnUrl.Equals(Url.Content("~/")) ? RedirectToAction("Index", "CLients") : LocalRedirect(returnUrl);
             }
             //something blewup above.. Idk...error
             return View(model);
@@ -126,6 +124,21 @@ public class AuthController : Controller
         catch (FormatException)
         {
             return false;
+        }
+    }
+
+    //Logout POST
+    public async Task<IActionResult> Signout(string returnUrl = null)
+    {
+        await _signInManager.SignOutAsync();
+        _logger.LogInformation("User logged out.");
+        if (returnUrl != null)
+        {
+            return LocalRedirect(returnUrl);
+        }
+        else
+        {
+            return RedirectToAction("Signin", "Auth");
         }
     }
 
