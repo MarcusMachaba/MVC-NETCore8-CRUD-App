@@ -1,0 +1,78 @@
+﻿@using Microsoft.AspNetCore.Identity  
+@using MVC.CRUD.Interface.Models.Entities
+@using MVC.CRUD.Interface.Extensions
+@inject UserManager<User> UserManager
+    
+    
+@if (User.Identity.IsAuthenticated)
+{
+
+    var userName = ViewExtension.GetDisplayName(User);
+    var membershipDate = ViewExtension.GetMembershipDate(User);
+    var actualStoreUser = UserManager.FindByIdAsync(ViewExtension.GetUserId(User));
+   
+        @*@Html.AntiForgeryToken()*@
+        <ul class="nav navbar-nav">
+            <!-- User Account Menu -->
+            <li class="dropdown user user-menu">
+            <!-- Menu Toggle Button -->
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <!-- The user image in the navbar-->
+                    @if (actualStoreUser != null)
+                    {
+                        @if (actualStoreUser.Result.ProfilePicture != null)
+                        {
+                            <img src="data:image/png;base64, @(actualStoreUser.Result.ProfilePicture)" class="user-image" alt="User Image">
+                        }
+                        else
+                        {
+                           <img src="~/dist/img/avatar.png" class="user-image" alt="User Image">
+                        }
+                    }
+                    <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                        <span class="hidden-xs">@userName</span>
+                </a>
+                <ul class="dropdown-menu">
+                     <!-- The user image in the menu -->
+                     <li class="user-header">
+                    <img src="data:image/png;base64, @(actualStoreUser.Result.ProfilePicture)" class="user-image" alt="User Image">
+                          <hr style="width:50%">
+                          <p>
+                            @User.Identity.Name
+                            <small>Member since @membershipDate</small>
+                          </p>
+                     </li>
+                     <!-- Menu Body -->
+                    @* <li class="user-body">
+                          <div class="row">
+                              <div class="col-xs-4 text-center">
+                                  <a href="#">Account</a>
+                              </div>
+                          </div>
+                          <!-- /.row -->
+                     </li>*@
+                     <!-- Menu Footer-->
+                     <li class="user-footer">
+                          <div class="pull-left">
+                                <a href="#" class="btn btn-default btn-flat">Profile</a>
+                          </div>
+                          <div class="pull-right">
+                                <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                     @Html.AntiForgeryToken()
+                                    <button  type="submit" class="btn btn-danger btn-flat">Sign out</button>
+                                 </form>
+                          </div>
+                     </li>
+                 </ul>
+            </li>
+        </ul>
+}
+else
+{
+    @*<ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>*@
+
+    @*<h5>Helloo your User.Identity.IsAuthenticated didnt work</h5>*@
+}

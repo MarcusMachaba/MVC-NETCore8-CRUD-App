@@ -1,0 +1,186 @@
+﻿@model List<MVC.CRUD.Interface.Models.Entities.Client>
+@{
+    ViewBag.Title = "Data";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Data Tables
+        <small>advanced tables</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Tables</a></li>
+        <li class="active">Data tables</li>
+    </ol>
+    <hr />
+</section>
+
+<section class="content container-fluid">
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Hover Data Table</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+
+                                    <th>Name</th>
+                                    <th>Platform</th>
+                                    <th>Region</th>
+                                    <th>Package</th>
+                                    <th>Active</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var client in Model)
+                                {
+                                    <tr>
+                                        <td>@client.Name</td>
+                                        <td>@client.Platform</td>
+                                        <td>@client.Region</td>
+                                        <td>@client.Package</td>
+                                        <td>@(client.Active ? "Yes" : "No")</td>
+                                        <td>
+                                            <a href="#" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editModal" data-id="@client.Id">Edit</a>
+                                            <a href="#" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal" data-id="@client.Id">Delete</a>
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</section>
+ <!-- /.container -->
+
+
+
+
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Edit Customer/Client</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Delete Customer/Client</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+               
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts
+{
+   <script type="text/javascript">
+        window.setTimeout(function () {
+            $(".alert").fadeTo(30000, 0).slideUp(500, function () {
+                $(this).remove();
+            });
+        }, 4000);
+
+        
+
+        // $('#myModal').on('shown.bs.modal', function () {
+        //     $('#myInput').trigger('focus')
+        // })
+
+        $(document).ready(function () {
+            $('#importForm').submit(function (event) {
+                event.preventDefault();
+
+                var formData = new FormData($(this)[0]);
+
+                $.ajax({
+                    url: $(this).attr('action'),
+                    type: $(this).attr('method'),
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        $('#importMessage').html('<div class="alert alert-success">CSV import successful!</div>');
+                        setTimeout(function () {
+                            $('#importModal').modal('hide');
+                            location.reload();
+                        }, 1500);
+                    },
+                    error: function (response) {
+                        $('#importMessage').html('<div class="alert alert-danger">Error importing CSV.</div>');
+                    }
+                });
+            });
+
+            // function clearSearch() {
+            //     $('#txtName').val(''); 
+            // }
+
+            $('#editModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var id = button.data('id');
+                var modal = $(this);
+                $.ajax({
+                    url: '@Url.Action("Edit")/' + id,
+                    success: function (data) {
+                        modal.find('.modal-body').html(data);
+                    }
+                });
+            });
+
+            $('#deleteModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var id = button.data('id');
+                var modal = $(this);
+                $.ajax({
+                    url: '@Url.Action("Delete")/' + id,
+                    success: function (data) {
+                        modal.find('.modal-body').html(data);
+                    }
+                });
+            });
+        });
+
+        
+                                
+    </script>
+
+}
+

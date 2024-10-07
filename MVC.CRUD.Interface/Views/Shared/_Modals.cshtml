@@ -1,0 +1,67 @@
+﻿<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-red">
+                <h5 class="modal-title" id="errorModalTitle">Error</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="col-12">
+                    <span class="text-danger font-weight-bold" id="errorModalText"></span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-grey-blue">
+                <label class="modal-title" id="infoModalTitle">Information</label>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="col-12">
+                    <span class="text-success font-weight-bold" id="infoModalText"></span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showErrorModal(errorTitle, errorText) {
+        if (errorTitle) {
+            $('#errorModalTitle').text(errorTitle);
+        }
+
+        if (errorText) {
+            $('#errorModalText').text(errorText);
+        }
+
+        $('#errorModal').modal();
+    }
+
+    function showInformationModal(infoTitle, infoText) {
+        if (infoTitle) {
+            $('#infoModalTitle').text(infoTitle);
+        }
+
+        if (infoText) {
+            $('#infoModalText').text(infoText);
+        }
+
+        $('#infoModal').modal();
+    }
+</script>

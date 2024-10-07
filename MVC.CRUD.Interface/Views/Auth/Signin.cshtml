@@ -1,0 +1,160 @@
+﻿@* @page
+@using MVC.CRUD.Interface.Models.ViewModels
+@model SigninViewModel
+
+@{
+    ViewData["Title"] = "Log in";
+}
+
+<h1>@ViewData["Title"]</h1>
+<div class="row">
+    <div class="col-md-4">
+        <section>
+            <form id="account" method="post">
+                <h4>Use a local account to log in.</h4>
+                <hr />
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Email"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password"></label>
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label asp-for="RememberMe">
+                            <input asp-for="RememberMe" />
+                            @Html.DisplayNameFor(m => m.RememberMe)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Log in</button>
+                </div>
+                <div class="form-group">
+                    <p>
+                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                    </p>
+                    <p>
+                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+                    </p>
+                    <p>
+                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
+                    </p>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+ *@
+
+@using MVC.CRUD.Interface.Models.ViewModels
+@model SigninViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>CRUD Interface Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="google-signin-client_id" content="89592654723-s0p0bl2rsqhudvn7qudtd9l5k781vj55.apps.googleusercontent.com">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="~/images/icons/favicon.ico" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/css/util.css">
+    <link rel="stylesheet" type="text/css" href="~/css/main.css">
+    <!--===============================================================================================-->
+</head>
+<body class="hideVerticalHorizontalScrollbar">
+    <div class="row">
+        <div class="limiter col-md-12">
+            <div class="container-login100" style="background-image: url('../images/img-01.jpg');">
+                <div class="wrap-login100 p-t-50 p-b-0">
+                    <form asp-controller="Auth" asp-action="Signin" class="login100-form">
+
+                        <div asp-validation-summary="ModelOnly" class="text-danger font-weight-bold"></div>
+
+                        <div class="login100-form-avatar">
+                            <img src="~/dist/img/avatar.png" alt="AVATAR">
+                        </div>
+
+                        <span class="login100-form-title p-t-20 p-b-45">
+                            Sign In
+                        </span>
+
+                        <div class="wrap-input100 validate-input m-b-10" data-validate="Email is required">
+                            <input class="input100" type="text" name="email" id="username" placeholder="Username">
+                            <span class="focus-input100"></span>
+                            <span class="symbol-input100">
+                                <i class="fa fa-user"></i>
+                            </span>
+                            @*<span asp-validation-for="username" class="text-danger"></span>*@
+                        </div>
+
+                        <div class="wrap-input100 validate-input m-b-10" data-validate="Password is required">
+                            <input class="input100" type="password" name="password" id="password" placeholder="Password">
+                            <span class="focus-input100"></span>
+                            <span class="symbol-input100">
+                                <i class="fa fa-lock"></i>
+                            </span>
+                            @*<span asp-validation-for="password" class="text-danger"></span>*@
+                        </div>
+
+                        <div class="container-login100-form-btn p-t-10">
+                            <input type="submit" value="Login" class="login100-form-btn">
+                        </div>
+
+                        <div class="text-center w-full p-t-25 p-b-80">
+                            <a href="@Url.Action("ForgotPassword","Auth")" class="txt1">
+                                Forgot Username / Password?
+                            </a><br />
+                            <a href="@Url.Action("Signup","Auth")" class="txt1">
+                                Register
+                            </a>
+                        </div>
+                        <hr>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="limiter col-md-4">
+            @* @Html.Partial("_ProviderLogin") *@
+        </div>
+    </div>
+
+    <!--===============================================================================================-->
+    <script src="~/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/vendor/bootstrap/js/popper.js"></script>
+    <script src="~/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+    @* <script src="~/js/main.js"></script>*@
+
+</body>
+</html>
