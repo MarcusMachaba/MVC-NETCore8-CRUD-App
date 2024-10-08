@@ -14,4 +14,19 @@
             <i class="fa fa-lock"></i> <span>Privacy</span>
         </a>
     </li>
+    <li class="@Html.IsSelected(controller: "Clients") treeview">
+        <a href="@Url.Action("Index", "Clients")">
+            <i class="fa fa-cogs"></i> <span>Administration</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li class="@Html.IsSelected(action: "List")"><a href="@Url.Action("Index", "Clients")"><i class="fa fa-cloud"></i> Customers/Clients</a></li>
+            <li><a href="#">Users</a></li>
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">User Configuration</a></li>
+            <li><a href="#">System Management</a></li>
+        </ul>
+    </li>
 </ul>

@@ -16,8 +16,5 @@ public class Role : HasGIdRecord
     public string Name { get; set; }
     public string NormalizedName { get; set; }
 
-
-   
-
     public virtual ICollection<UserRole> UserRoles { get; set; }
 }
