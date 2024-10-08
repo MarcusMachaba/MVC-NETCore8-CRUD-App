@@ -24,6 +24,39 @@ public class ClientsController : Controller
         _logger = logger;
     }
 
+    //Create GET
+    public async Task<IActionResult> Create()
+    {
+        try
+        {
+            var client = new Client();
+            return PartialView("_Create", client);
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
+    }
+
+    //Create POST
+    [HttpPost]
+    public async Task<IActionResult> Create(Client client)
+    {
+        if (ModelState.IsValid)
+        {
+            try
+            {
+                var createdClient = await _clientsService.AddClientAsync(client);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return RedirectToAction(nameof(Index));
+        }
+        return PartialView("_Create", client);
+    }
+
     //ReadAll GET
     public async Task<IActionResult> Index()
     {

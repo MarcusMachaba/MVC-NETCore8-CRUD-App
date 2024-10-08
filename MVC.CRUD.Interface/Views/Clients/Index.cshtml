@@ -3,6 +3,7 @@
     ViewBag.Title = "Data";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
@@ -26,8 +27,16 @@
                     <div class="box-header">
                         <h3 class="box-title">Hover Data Table</h3>
                     </div>
+
                     <!-- /.box-header -->
                     <div class="box-body">
+                        <!-- ADD NEW CLIENT btn -->
+                        <div class="col-md-8 col-md-offset-2">
+                            <form asp-action="Create" asp-controller="Clients" method="get" role="form">
+                                <a href="#" class="btn btn-lg btn-block btn-success" data-toggle="modal" data-target="#createModal" data-id="@Model"><i class="fa fa-plus-circle"></i> Add</a>
+                            </form>
+                            <br />
+                        </div>
                         <table class="table table-striped table-hover">
                             <thead>
                                 <tr>
@@ -67,11 +76,25 @@
     </section>
     <!-- /.content -->
 </section>
- <!-- /.container -->
+<!-- /.container -->
 
 
-
-
+<!-- Add Modal -->
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createModalLabel">Add Customer/Client</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+               
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Edit Modal -->
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
@@ -84,7 +107,6 @@
                 </button>
             </div>
             <div class="modal-body">
-                
             </div>
         </div>
     </div>
@@ -101,7 +123,6 @@
                 </button>
             </div>
             <div class="modal-body">
-               
             </div>
         </div>
     </div>
@@ -111,14 +132,14 @@
 
 @section Scripts
 {
-   <script type="text/javascript">
+    <script type="text/javascript">
         window.setTimeout(function () {
             $(".alert").fadeTo(30000, 0).slideUp(500, function () {
                 $(this).remove();
             });
         }, 4000);
 
-        
+
 
         // $('#myModal').on('shown.bs.modal', function () {
         //     $('#myInput').trigger('focus')
@@ -150,8 +171,19 @@
             });
 
             // function clearSearch() {
-            //     $('#txtName').val(''); 
+            //     $('#txtName').val('');
             // }
+
+            $('#createModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var modal = $(this);
+                $.ajax({
+                    url: '@Url.Action("Create")/',
+                    success: function (data) {
+                        modal.find('.modal-body').html(data);
+                    }
+                });
+            });
 
             $('#editModal').on('show.bs.modal', function (event) {
                 var button = $(event.relatedTarget);
@@ -178,8 +210,8 @@
             });
         });
 
-        
-                                
+
+
     </script>
 
 }
