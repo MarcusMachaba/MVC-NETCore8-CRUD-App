@@ -21,6 +21,13 @@ public class HomeController : Controller
         return View();
     }
 
+    public IActionResult DownloadPdf()
+    {
+        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Assessment Criteria.pdf");
+        var fileBytes = System.IO.File.ReadAllBytes(filePath);
+        return File(fileBytes, "application/pdf", "AssessmentCriteria.pdf");
+    }
+
     public IActionResult Privacy()
     {
         return View();

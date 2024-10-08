@@ -2,7 +2,89 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<section class="content-header">
+    <h1>
+        Home
+        <small>CRUD interface (demo)</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+        <li class="active">Home</li>
+    </ol>
+</section>
+
+
+
+<section class="content container-fluid">
+    <div class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-body box-info">
+                    <div style="padding: 38px;">
+                        <div class="well">
+
+                            <div class="row">
+                                <hr />
+                                <div class="pad margin no-print">
+                                    <div class="callout callout-info" style="margin-bottom: 0!important;">
+                                        <h4><i class="fa fa-info"></i> Note:</h4>
+                                        This page has been enhanced for printing. Click the print button at the bottom of the invoice to test.
+                                    </div>
+                                </div>
+                                <section class="invoice">
+                                    <!-- title row -->
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <h2 class="page-header">
+                                                <i class="fa fa-globe"></i> Outline:
+                                            </h2>
+                                        </div>
+                                        <!-- /.col -->
+                                    </div>
+                       
+                                </section>
+                                <!-- /.content -->
+                            </div>
+                            <div class="container">
+                                <h2>Assessment Criteria</h2>
+                                <p>This document outlines a skills assessment for developers. The objective of the assessment is to identify the developer’s knowledge in:</p>
+                                <ul>
+                                    <li>Object-Oriented Programming (OOP)</li>
+                                    <li>Session Management</li>
+                                    <li>Database Connections</li>
+                                    <li>Security understanding (Access, restrictions, etc.)</li>
+                                    <li>Data Sanitization</li>
+                                    <li>MVC or MVVC implementation (Model, View, Controller)</li>
+                                </ul>
+
+                                <h3>Assessment Task</h3>
+                                <p>The candidate should create a CRUD (Create, Read, Update and Delete) interface with login functionality and access controls for Admin and Staff.</p>
+
+                                <h3>Evaluation Criteria</h3>
+                                <ul>
+                                    <li>Correct usage of Forms</li>
+                                    <li>Base Configuration settings</li>
+                                    <li>Class structure: Neat, organized, documented</li>
+                                    <li>Design patterns implemented</li>
+                                    <li>Front-end styling (Bootstrap, etc.)</li>
+                                    <li>Security implementation</li>
+                                    <li>Data sanitization</li>
+                                </ul>
+
+                                <h3>Conclusion</h3>
+                                <p>Based on the assessment, we can evaluate the developer's experience and knowledge, taking into account time and planning.</p>
+                           </div>
+                           <div class="container">
+                                <h2>Assessment Criteria</h2>
+                                <p>Download the document below to view the full assessment criteria:</p>
+                                <a href="@Url.Action("DownloadPdf", "Home")" download>Download Assessment Criteria PDF</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
