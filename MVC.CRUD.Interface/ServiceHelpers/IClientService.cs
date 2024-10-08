@@ -11,6 +11,7 @@ public interface IClientService
     Task<Client> GetClientByIdAsync(string id);
     Task UpdateClientAsync(Client client);
     Task DeleteClientAsync(string id);
+    Task<Client> AddClientAsync(Client client);
 }
 
 public class ClientService: IClientService
@@ -73,6 +74,20 @@ public class ClientService: IClientService
             await _clientsRepository.SaveAsync();
         }
         catch (Exception ex)
+        {
+            throw;
+        }
+    }
+
+    public async Task<Client> AddClientAsync(Client client)
+    {
+        try
+        {
+            await _clientsRepository.InsertAsync(client);
+            await _clientsRepository.SaveAsync();
+            return await _clientsRepository.GetByIdAsync(client.Id);
+        }
+        catch (Exception e)
         {
             throw;
         }
