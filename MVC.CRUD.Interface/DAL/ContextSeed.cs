@@ -21,9 +21,10 @@ public static class ContextSeed
             await roleManager.CreateAsync(new IdentityRole(Models.Enums.Roles.Basic.ToString()));
     }
 
+    //admin
     public static async Task SeedSuperAdminAsync(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
     {
-        //Seed Default User
+        //Seed default SuperAdmin User
         var defaultUser = new User
         {
             UserName = "superadmin@gmail.com",
@@ -46,6 +47,31 @@ public static class ContextSeed
                 await userManager.AddToRoleAsync(defaultUser, Models.Enums.Roles.SuperAdmin.ToString());
             }
 
+        }
+    }
+
+    //staff
+    public static async Task SeedBasicAsync(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+    {
+        //Seed default Admin User
+        var defaultUser = new User
+        {
+            UserName = "basic@gmail.com",
+            Email = "basic@gmail.com",
+            FirstName = "Basic",
+            Surname = "basicsurname",
+            EmailConfirmed = true,
+            PhoneNumberConfirmed = true
+        };
+
+        if (userManager.Users.All(u => u.Id != defaultUser.Id))
+        {
+            var user = await userManager.FindByEmailAsync(defaultUser.Email);
+            if (user == null)
+            {
+                await userManager.CreateAsync(defaultUser, "P@ssword123");
+                await userManager.AddToRoleAsync(defaultUser, Models.Enums.Roles.Basic.ToString());
+            }
         }
     }
 

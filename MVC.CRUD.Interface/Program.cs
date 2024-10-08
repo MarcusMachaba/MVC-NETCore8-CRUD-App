@@ -104,6 +104,7 @@ using (var scope = app.Services.CreateScope())
         await ContextSeed.SeedRolesAsync(userManager, roleManager);
         await ContextSeed.SeedSuperAdminAsync(userManager, roleManager);
         await ContextSeed.SeedClientsAsync(context);
+        await ContextSeed.SeedBasicAsync(userManager, roleManager);
     }
     catch (Exception ex)
     {
