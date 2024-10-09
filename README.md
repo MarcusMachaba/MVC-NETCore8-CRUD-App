@@ -67,4 +67,4 @@ During our assessment of the code supplied, we will evaluate the following:
     </ul>
 </div>
 
-**[Download the Database File](https://github.com/MarcusMachaba/MVC-NETCore8-CRUD-App/blob/main/MVC_CRUD_Interface_DB.sql)**
+**[Download the Database File](./MVC_CRUD_Interface_DB.sql)**
