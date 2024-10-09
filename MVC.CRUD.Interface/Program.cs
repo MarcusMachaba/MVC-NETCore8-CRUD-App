@@ -1,16 +1,12 @@
 using AspNetCoreHero.ToastNotification;
 using AspNetCoreHero.ToastNotification.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using MVC.CRUD.Interface.DAL;
 using MVC.CRUD.Interface.Models.Entities;
 using MVC.CRUD.Interface.ServiceHelpers;
 using MVC.CRUD.Interface.UtilityHelpers;
-using System.Xml.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,9 +16,7 @@ ConfigureSetup();
 builder.Services.AddDbContext<CRUDContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
 
-builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
-builder.Services.AddScoped<IClientService, ClientService>();
+InjectInterfaces(builder.Services);
 
 builder.Services.AddIdentity<User, IdentityRole>(options =>
 {
@@ -116,10 +110,16 @@ using (var scope = app.Services.CreateScope())
 
 app.Run();
 
-
 void ConfigureSetup()
 {
     //AppPasswordEncryption
     var encryptionKey = builder.Configuration["EncryptionKey"];
     ApplicationPasswordEncryption.SetPasswordEncruptionKey(encryptionKey);
+}
+
+void InjectInterfaces(IServiceCollection services)
+{
+    services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+    services.AddScoped<IAuthenticationService, AuthenticationService>();
+    services.AddScoped<IClientService, ClientService>();
 }

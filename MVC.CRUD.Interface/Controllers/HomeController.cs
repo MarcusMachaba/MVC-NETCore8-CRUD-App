@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MVC.CRUD.Interface.Models;
 using MVC.CRUD.Interface.Models.ViewModels;
 using System.Diagnostics;
 

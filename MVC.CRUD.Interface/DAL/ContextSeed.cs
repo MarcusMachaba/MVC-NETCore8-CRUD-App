@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using MVC.CRUD.Interface.Models.Entities;
-using System;
 
 
 namespace MVC.CRUD.Interface.DAL;

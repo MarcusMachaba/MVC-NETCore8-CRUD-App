@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using MVC.CRUD.Interface.DAL;
 using MVC.CRUD.Interface.Models.Entities;
 using MVC.CRUD.Interface.Models.Enums;
-using System;
 
 namespace MVC.CRUD.Interface.Controllers;
 

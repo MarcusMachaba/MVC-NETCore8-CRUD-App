@@ -1,11 +1,9 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MVC.CRUD.Interface.Models.Entities;
 using MVC.CRUD.Interface.Models.ViewModels;
-using System;
 using System.Net.Mail;
 
 namespace MVC.CRUD.Interface.Controllers;

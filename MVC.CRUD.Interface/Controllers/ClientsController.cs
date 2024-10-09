@@ -1,11 +1,9 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MVC.CRUD.Interface.Models.Entities;
 using MVC.CRUD.Interface.Models.Enums;
-using System;
 
 namespace MVC.CRUD.Interface.Controllers;
 
