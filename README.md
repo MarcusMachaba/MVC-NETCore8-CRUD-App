@@ -67,4 +67,4 @@ During our assessment of the code supplied, we will evaluate the following:
     </ul>
 </div>
 
-**[Download the Database File](./MVC_CRUD_Interface_DB.sql)**
+**[Download the Database File or Script](./MVC_CRUD_Interface_DB.sql)**
