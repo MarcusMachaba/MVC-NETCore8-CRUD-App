@@ -209,7 +209,7 @@
                         // Check if the response status is 403 Forbidden
                         if (xhr.status === 403) {
                             // Display custom 403 error message in the modal
-                            modal.find('.modal-body').html('<p class="text-danger">You do not have permission to perform this action.</p>');
+                            modal.find('.modal-body').html('<p class="text-danger">403 Forbidden - You do not have permission to perform this action.</p>');
                         } else {
                             // Handle other errors
                             modal.find('.modal-body').html('<p class="text-danger">Oops! An error occurred: ' + error + '</p>');

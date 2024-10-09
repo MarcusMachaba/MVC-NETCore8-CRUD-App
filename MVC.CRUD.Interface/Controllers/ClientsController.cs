@@ -47,12 +47,18 @@ public class ClientsController : Controller
             try
             {
                 var createdClient = await _clientsService.AddClientAsync(client);
+                if (createdClient != null)
+                {
+                    _notyf.Success($"Client created successfully.");
+                }
             }
             catch (Exception ex)
             {
+                _notyf.Error($"Failed to create new client.");
                 _logger.LogError(ex, "Failed to create new client");
                 throw;
             }
+
             return RedirectToAction(nameof(Index));
         }
         return PartialView("_Create", client);
@@ -100,15 +106,18 @@ public class ClientsController : Controller
             try
             {
                 await _clientsService.UpdateClientAsync(client);
+                _notyf.Success($"Client updated successfully.");
             }
             catch (DbUpdateConcurrencyException ex)
             {
                 if (!await ClientExists(client.Id))
                 {
+                    _notyf.Warning($"Client Not Found.");
                     return NotFound();
                 }
                 else
                 {
+                    _notyf.Error($"Failed to update client.");
                     _logger.LogError(ex, "Failed to update client");
                     throw;
                 }
@@ -137,6 +146,7 @@ public class ClientsController : Controller
     public async Task<IActionResult> DeleteConfirmed(string id)
     {
         await _clientsService.DeleteClientAsync(id);
+        _notyf.Success($"Client deleted successfully.");
         return RedirectToAction(nameof(Index));
     }
 
