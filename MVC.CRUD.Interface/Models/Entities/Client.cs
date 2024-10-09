@@ -2,7 +2,7 @@
 
 namespace MVC.CRUD.Interface.Models.Entities
 {
-    public class Client: HasGId
+    public class Client: HasGIdRecord
     {
         public string Name { get; set; }
         public string Platform { get; set; }

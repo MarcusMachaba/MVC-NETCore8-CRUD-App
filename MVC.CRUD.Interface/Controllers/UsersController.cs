@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MVC.CRUD.Interface.DAL;
 using MVC.CRUD.Interface.Models.Entities;
+using MVC.CRUD.Interface.Models.Enums;
 using System;
 
 namespace MVC.CRUD.Interface.Controllers;
 
+[Authorize(Roles = nameof(Roles.SuperAdmin))]
 public class UsersController : Controller
 {
     private readonly ILogger<UsersController> _logger;
@@ -93,5 +96,4 @@ public class UsersController : Controller
             return View();
         }
     }
-
 }

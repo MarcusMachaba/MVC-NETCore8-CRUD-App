@@ -29,11 +29,12 @@
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="~/css/util.css">
     <link rel="stylesheet" type="text/css" href="~/css/main.css">
+    <link rel="stylesheet" href="~/default/ReadMe.css" asp-append-version="true" />
     <!--===============================================================================================-->
 </head>
 <body class="hideVerticalHorizontalScrollbar">
     <div class="row">
-        <div class="limiter col-md-12">
+        <div class="limiter col-md-8">
             <div class="container-login100" style="background-image: url('../images/img-01.jpg');">
                 <div class="wrap-login100 p-t-50 p-b-0">
                     <form asp-controller="Auth" asp-action="Signin" class="login100-form">
@@ -73,10 +74,10 @@
                         </div>
 
                         <div class="text-center w-full p-t-25 p-b-80">
-                            <a href="@Url.Action("ForgotPassword","Auth")" class="txt1">
+                            <a href="@Url.Action("ForgotPassword","Auth")" class="txt1 disabled-link">
                                 Forgot Username / Password?
                             </a><br />
-                            <a href="@Url.Action("Signup","Auth")" class="txt1">
+                            <a href="@Url.Action("Signup","Auth")" class="txt1 disabled-link">
                                 Register
                             </a>
                         </div>
@@ -88,6 +89,8 @@
 
         <div class="limiter col-md-4">
             @* @Html.Partial("_ProviderLogin") *@
+            <!-- README instructions on the right -->
+            @await Html.PartialAsync("_ReadMe") <!-- Display README instructions -->
         </div>
     </div>
 
@@ -100,6 +103,15 @@
     <script src="~/vendor/select2/select2.min.js"></script>
     <!--===============================================================================================-->
     @* <script src="~/js/main.js"></script>*@
-
+    <script>
+        // Use jQuery to prevent the default action of the links
+        $(document).ready(function () {
+            $('.disabled-link').on('click', function (event) {
+                event.preventDefault(); // Prevents the link from being clickable
+            });
+        });
+    </script>
 </body>
 </html>
+
+

@@ -21,7 +21,7 @@ public static class ContextSeed
             await roleManager.CreateAsync(new IdentityRole(Models.Enums.Roles.Basic.ToString()));
     }
 
-    //admin
+    //superadmin
     public static async Task SeedSuperAdminAsync(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
     {
         //Seed default SuperAdmin User
@@ -42,7 +42,7 @@ public static class ContextSeed
             {
                 await userManager.CreateAsync(defaultUser, "P@ssword123");
                 await userManager.AddToRoleAsync(defaultUser, Models.Enums.Roles.Basic.ToString());
-                await userManager.AddToRoleAsync(defaultUser, Models.Enums.Roles.Moderator.ToString());
+                //await userManager.AddToRoleAsync(defaultUser, Models.Enums.Roles.Moderator.ToString());
                 await userManager.AddToRoleAsync(defaultUser, Models.Enums.Roles.Admin.ToString());
                 await userManager.AddToRoleAsync(defaultUser, Models.Enums.Roles.SuperAdmin.ToString());
             }
@@ -50,10 +50,35 @@ public static class ContextSeed
         }
     }
 
+    //admin
+    public static async Task SeedAdminAsync(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+    {
+        //Seed default Admin User
+        var defaultUser = new User
+        {
+            UserName = "admin@gmail.com",
+            Email = "admin@gmail.com",
+            FirstName = "Admin",
+            Surname = "adminsurname",
+            EmailConfirmed = true,
+            PhoneNumberConfirmed = true
+        };
+
+        if (userManager.Users.All(u => u.Id != defaultUser.Id))
+        {
+            var user = await userManager.FindByEmailAsync(defaultUser.Email);
+            if (user == null)
+            {
+                await userManager.CreateAsync(defaultUser, "P@ssword123");
+                await userManager.AddToRoleAsync(defaultUser, Models.Enums.Roles.Admin.ToString());
+            }
+        }
+    }
+
     //staff
     public static async Task SeedBasicAsync(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
     {
-        //Seed default Admin User
+        //Seed default Basic User
         var defaultUser = new User
         {
             UserName = "basic@gmail.com",
@@ -89,6 +114,7 @@ public static class ContextSeed
                     Package = "Standard",
                     Platform = "Windows 10",
                     Region = "Gauteng",
+                    Active = true,
                 },
                 new Client
                 {
@@ -96,6 +122,7 @@ public static class ContextSeed
                     Package = "Basic",
                     Platform = "Windows 7",
                     Region = "Mpumalanga",
+                    Active = true,
                 },
                 new Client
                 {
@@ -103,6 +130,7 @@ public static class ContextSeed
                     Package = "Enterprise",
                     Platform = "Windows 11",
                     Region = "Gauteng",
+                    Active = true,
                 },
                 new Client
                 {
@@ -124,6 +152,7 @@ public static class ContextSeed
                     Package = "Basic",
                     Platform = "Windows 7",
                     Region = "Cape Town",
+                    Active = true,
                 },
                 new Client
                 {
@@ -131,6 +160,7 @@ public static class ContextSeed
                     Package = "Enterprise",
                     Platform = "Windows 10",
                     Region = "Eastern Cape",
+                    Active = true,
                 },
                 new Client
                 {
@@ -152,6 +182,7 @@ public static class ContextSeed
                     Package = "Basic",
                     Platform = "Windows 11",
                     Region = "Free State",
+                    Active = true,
                 },
                 new Client
                 {
@@ -166,6 +197,7 @@ public static class ContextSeed
                     Package = "Basic",
                     Platform = "Windows 11",
                     Region = "Free State",
+                    Active = true,
                 },
                 new Client
                 {
@@ -180,6 +212,7 @@ public static class ContextSeed
                     Package = "Enterprise",
                     Platform = "Windows 11",
                     Region = "KZN",
+                    Active = true,
                 },
                 new Client
                 {
@@ -187,6 +220,7 @@ public static class ContextSeed
                     Package = "Basic",
                     Platform = "Windows 7",
                     Region = "Eastern Cape",
+                    Active = true,
                 }
             };
             clients.ForEach(client => context.Clients.AddAsync(client));

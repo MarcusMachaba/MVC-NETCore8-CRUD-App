@@ -1,0 +1,20 @@
+.readme-container {
+    padding: 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.readme-container h3 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.readme-container ul {
+    padding-left: 20px;
+}
+
+.readme-container ul li {
+    margin-bottom: 10px;
+}

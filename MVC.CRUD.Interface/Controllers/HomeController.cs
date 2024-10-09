@@ -28,6 +28,11 @@ public class HomeController : Controller
         return File(fileBytes, "application/pdf", "AssessmentCriteria.pdf");
     }
 
+    public ActionResult Print()
+    {
+        return View();
+    }
+
     public IActionResult Privacy()
     {
         return View();

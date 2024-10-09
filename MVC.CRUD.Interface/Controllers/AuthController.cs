@@ -10,6 +10,7 @@ using System.Net.Mail;
 
 namespace MVC.CRUD.Interface.Controllers;
 
+[AllowAnonymous]
 public class AuthController : Controller
 {
     private readonly MVC.CRUD.Interface.ServiceHelpers.IAuthenticationService _authenticationService;
@@ -46,16 +47,25 @@ public class AuthController : Controller
         {
             return RedirectToAction(nameof(Index));
         }
-        catch
+        catch(Exception e)
         {
+            _logger.LogError(e, "User signup failed!.");
             return View();
         }
     }
 
-    [HttpGet]
     public IActionResult AccessDenied()
     {
-        return View();
+        try
+        {
+            _notyf.Warning($"403: Forbidden. You dont have the permission to perform this action");
+            return PartialView("_AccessDenied");
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "User does not have permissions to perform action.");
+            throw;
+        }
     }
 
     //Login GET
@@ -108,6 +118,7 @@ public class AuthController : Controller
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex, "User login failed.");
             throw;
         }
 

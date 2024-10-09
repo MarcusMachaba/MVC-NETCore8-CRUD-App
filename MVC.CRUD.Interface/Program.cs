@@ -102,9 +102,10 @@ using (var scope = app.Services.CreateScope())
         var userManager = services.GetRequiredService<UserManager<User>>();
         var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
         await ContextSeed.SeedRolesAsync(userManager, roleManager);
-        await ContextSeed.SeedSuperAdminAsync(userManager, roleManager);
-        await ContextSeed.SeedClientsAsync(context);
-        await ContextSeed.SeedBasicAsync(userManager, roleManager);
+        await ContextSeed.SeedSuperAdminAsync(userManager, roleManager);//has all 4 roles (superadmin, admin, moderator, basic)
+        await ContextSeed.SeedClientsAsync(context);//sample customers list
+        await ContextSeed.SeedBasicAsync(userManager, roleManager);//has only 1 role (basic)=staff
+        await ContextSeed.SeedAdminAsync(userManager, roleManager);//has only 1 role (admin)=admin
     }
     catch (Exception ex)
     {

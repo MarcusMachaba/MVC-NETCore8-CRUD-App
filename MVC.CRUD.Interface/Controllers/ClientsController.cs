@@ -4,11 +4,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MVC.CRUD.Interface.Models.Entities;
+using MVC.CRUD.Interface.Models.Enums;
 using System;
 
 namespace MVC.CRUD.Interface.Controllers;
 
-[Authorize]
 public class ClientsController : Controller
 {
     private readonly MVC.CRUD.Interface.ServiceHelpers.IClientService _clientsService;
@@ -25,6 +25,7 @@ public class ClientsController : Controller
     }
 
     //Create GET
+    [Authorize(Roles = nameof(Roles.SuperAdmin) + "," + nameof(Roles.Basic) + "," + nameof(Roles.Admin))]
     public async Task<IActionResult> Create()
     {
         try
@@ -34,12 +35,13 @@ public class ClientsController : Controller
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex, "Failed to fetch client create view");
             throw;
         }
     }
 
     //Create POST
-    [HttpPost]
+    [HttpPost, Authorize(Roles = nameof(Roles.SuperAdmin) + "," + nameof(Roles.Basic) + "," + nameof(Roles.Admin))]
     public async Task<IActionResult> Create(Client client)
     {
         if (ModelState.IsValid)
@@ -50,6 +52,7 @@ public class ClientsController : Controller
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Failed to create new client");
                 throw;
             }
             return RedirectToAction(nameof(Index));
@@ -58,12 +61,12 @@ public class ClientsController : Controller
     }
 
     //ReadAll GET
+    [Authorize]
     public async Task<IActionResult> Index()
     {
         try
         {
             var clients = await _clientsService.GetAllClientsAsync();
-
 
             return View(clients);
         }
@@ -74,6 +77,7 @@ public class ClientsController : Controller
     }
 
     //EditOne GET
+    [Authorize(Roles = nameof(Roles.SuperAdmin) + "," + nameof(Roles.Basic) + "," + nameof(Roles.Admin))]
     public async Task<IActionResult> Edit(string id)
     {
         var client = await _clientsService.GetClientByIdAsync(id);
@@ -85,7 +89,7 @@ public class ClientsController : Controller
     }
 
     //EditOne POST
-    [HttpPost]
+    [HttpPost, Authorize(Roles = nameof(Roles.SuperAdmin) + "," + nameof(Roles.Basic) + "," + nameof(Roles.Admin))]
     public async Task<IActionResult> Edit(string id, Client client)
     {
         if (id != client.Id)
@@ -99,7 +103,7 @@ public class ClientsController : Controller
             {
                 await _clientsService.UpdateClientAsync(client);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException ex)
             {
                 if (!await ClientExists(client.Id))
                 {
@@ -107,6 +111,7 @@ public class ClientsController : Controller
                 }
                 else
                 {
+                    _logger.LogError(ex, "Failed to update client");
                     throw;
                 }
             }
@@ -117,6 +122,7 @@ public class ClientsController : Controller
 
 
     //DeleteOne GET
+    [Authorize(Roles = nameof(Roles.SuperAdmin) + "," + nameof(Roles.Admin))]
     public async Task<IActionResult> Delete(string id)
     {
         var client = await _clientsService.GetClientByIdAsync(id);
@@ -128,8 +134,8 @@ public class ClientsController : Controller
     }
 
 
-    //EditOne POST
-    [HttpPost, ActionName("Delete")]
+    //DeleteOne POST
+    [HttpPost, ActionName("Delete"), Authorize(Roles = nameof(Roles.SuperAdmin) + "," + nameof(Roles.Admin))]
     public async Task<IActionResult> DeleteConfirmed(string id)
     {
         await _clientsService.DeleteClientAsync(id);
@@ -141,5 +147,4 @@ public class ClientsController : Controller
         var client = await _clientsService.GetClientByIdAsync(id);
         return client != null;
     }
-
 }

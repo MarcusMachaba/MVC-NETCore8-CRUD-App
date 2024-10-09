@@ -23,8 +23,8 @@ public abstract class HasIdRecord : HasIdOnly, IHasIdRecord
 /// </summary>
 public interface IHasGIdRecord : IHasGId
 {
-    DateTime Created { get; set; }
-    DateTime LastUpdate { get; set; }
+    DateTime? CreatedDate { get; set; }
+    DateTime? LastUpdateDate { get; set; }
 }
 
 [DataContract]
@@ -32,11 +32,11 @@ public abstract class HasGIdRecord : HasGId, IHasGIdRecord
 {
     public HasGIdRecord()
     {
-        Created = DateTime.Now;
-        LastUpdate = DateTime.Now;
+        CreatedDate = DateTime.Now;
+        //LastUpdateDate = DateTime.Now;
     }
     [DataMember]
-    public DateTime Created { get; set; }
+    public DateTime? CreatedDate { get; set; }
     [DataMember]
-    public DateTime LastUpdate { get; set; }
+    public DateTime? LastUpdateDate { get; set; }
 }

@@ -115,12 +115,13 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Delete Customer/Client</h5>
+                <h5 class="modal-title" id="deleteModalLabel">Delete Confirmation</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
+                <!-- Content or error message will be loaded here -->
             </div>
         </div>
     </div>
@@ -202,14 +203,25 @@
                 $.ajax({
                     url: '@Url.Action("Delete")/' + id,
                     success: function (data) {
-                        modal.find('.modal-body').html(data);
+                        modal.find('.modal-body').html(data); // If successful, load data into the modal
+                    },
+                    error: function (xhr, status, error) {
+                        // Check if the response status is 403 Forbidden
+                        if (xhr.status === 403) {
+                            // Display custom 403 error message in the modal
+                            modal.find('.modal-body').html('<p class="text-danger">You do not have permission to perform this action.</p>');
+                        } else {
+                            // Handle other errors
+                            modal.find('.modal-body').html('<p class="text-danger">Oops! An error occurred: ' + error + '</p>');
+                        }
                     }
                 });
             });
+
+
+
+
         });
-
-
-
     </script>
 
 }

@@ -32,7 +32,7 @@ public class ClientService: IClientService
         try
         {
             var allClients = await _clientsRepository.GetAllAsync();
-            return allClients;
+            return allClients.OrderByDescending(x => x.CreatedDate).ToList();
         }
         catch (Exception e)
         {
@@ -57,6 +57,7 @@ public class ClientService: IClientService
     {
         try
         {
+            client.LastUpdateDate = DateTime.Now;
             await _clientsRepository.UpdateAsync(client); 
             await _clientsRepository.SaveAsync();
         }

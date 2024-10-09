@@ -1,0 +1,27 @@
+﻿<div class="readme-container p-3 bg-light border rounded">
+    <h3>README Instructions</h3>
+    <p class="text-muted">Welcome to the .NET Core 8 MVC CRUD Interface application. Below are some guidelines:</p>
+    <ul class="list-unstyled">
+        <li><i class="fa fa-check-circle text-success"></i> NB! First this solution makes use of EntityFrameworkCore Code-First approach - so you have to run migrations from PackageManagerConsole or the dotNetTool first so that your database gets created with the schema first then you can proceed to test functionality.</li>
+        <li><i class="fa fa-check-circle text-success"></i> Do not modify the connectionstring.</li>
+        <li><i class="fa fa-check-circle text-success"></i> Commands to run on PackageManagerConsole: <p class="font-weight-bold"> update-database </p></li>
+        <li><i class="fa fa-check-circle text-success"></i> Sample data will get seeded to your database (MS-SQL database) on startup of solution.<p class="font-weight-bold"> DatabaseName='MVC_CRUD_Interface_DB'. </p></li>
+        <li><i class="fa fa-check-circle text-success"></i> There are 4 Roles that gets seeded to database on app-startup
+            <p class="font-weight-bold"> 1: SuperAdmin - has permissions do everything. </p> 
+            <p class="font-weight-bold"> 2: Admin - has permissions to only Add/Edit, and Remove Clients/Customers. </p>
+            <p class="font-weight-bold"> 3: Moderator - not hookedup no user has this role in the seeded sample data. </p>
+            <p class="font-weight-bold"> 4: Basic - consider this role to be a staff member as per criteria & only has permissions to Add/Edit Clients/Customers </p>
+        
+        </li>
+        <li><i class="fa fa-check-circle text-success"></i> Credentials: 
+            <p class="font-weight-bold"> SuperAdmin-RoleUser Username: superadmin@gmail.com. </p> 
+            <p class="font-weight-bold"> Admin-RoleUser Username: admin@gmail.com. </p> 
+            <p class="font-weight-bold"> Basic-RoleUser (Staff) Username: basic@gmail.com. </p>
+            The Password for all these 3 users is: <p class="font-weight-bold font-italic "> P@ssword123 </p>
+        </li>
+        <li><i class="fa fa-check-circle text-success"></i> Use the form on the left to log in using the provided credentials above.</li>
+        <li><i class="fa fa-check-circle text-success"></i> After logging in, you will have access to the CRUD interface for managing data based on roles.</li>
+
+           
+    </ul>
+</div>

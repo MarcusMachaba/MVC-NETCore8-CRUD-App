@@ -1,0 +1,117 @@
+﻿
+<div class="container-login100" style="background-image: url('../images/b2.jfif');">
+    <p class="txt1">Sign in with your social media account</p>
+     <span class="login100-form-title p-t-20 p-b-45">
+      External Sign In
+     </span>
+     
+    <!-- Facebook -->
+    <a class="btn btn-primary" style="background-color: #3b5998;" href="#!" role="button"
+      ><i class="fab fa-facebook-f"></i
+    ></a>
+
+    <!-- Twitter -->
+    <a class="btn btn-primary" style="background-color: #55acee;" href="#!" role="button"
+      ><i class="fab fa-twitter"></i
+    ></a>
+
+    <!-- Google -->
+    <a class="btn btn-primary" style="background-color: #dd4b39;" href="#!" role="button"
+      ><i class="fab fa-google"></i
+    ></a>
+
+
+    <!-- Instagram -->
+    <a class="btn btn-primary" style="background-color: #ac2bac;" href="#!" role="button"
+      ><i class="fab fa-instagram"></i
+    ></a>
+
+    <!-- Linkedin -->
+    <a class="btn btn-primary" style="background-color: #0082ca;" href="#!" role="button"
+      ><i class="fab fa-linkedin-in"></i
+    ></a>
+
+    <!-- Pinterest -->
+    <a class="btn btn-primary" style="background-color: #c61118;" href="#!" role="button"
+      ><i class="fab fa-pinterest"></i
+    ></a>
+
+    <!-- Vkontakte -->
+    <a class="btn btn-primary" style="background-color: #4c75a3;" href="#!" role="button"
+      ><i class="fab fa-vk"></i
+    ></a>
+
+    <!-- Stack overflow -->
+    <a class="btn btn-primary" style="background-color: #ffac44;" href="#!" role="button"
+      ><i class="fab fa-stack-overflow"></i
+    ></a>
+
+    <!-- Youtube -->
+    <a class="btn btn-primary" style="background-color: #ed302f;" href="#!" role="button"
+      ><i class="fab fa-youtube"></i
+    ></a>
+
+    <!-- Slack -->
+    <a class="btn btn-primary" style="background-color: #481449;" href="#!" role="button"
+      ><i class="fab fa-slack-hash"></i
+    ></a>
+
+    <!-- Github -->
+    <a class="btn btn-primary" style="background-color: #333333;" href="#!" role="button"
+      ><i class="fab fa-github"></i
+    ></a>
+
+    <!-- Dribbble -->
+    <a class="btn btn-primary" style="background-color: #ec4a89;" href="#!" role="button"
+      ><i class="fab fa-dribbble"></i
+    ></a>
+
+    <!-- Reddit -->
+    <a class="btn btn-primary" style="background-color: #ff4500;" href="#!" role="button"
+      ><i class="fab fa-reddit-alien"></i
+    ></a>
+
+    <!-- Whatsapp -->
+    <a class="btn btn-primary" style="background-color: #25d366;" href="#!" role="button"
+      ><i class="fab fa-whatsapp"></i
+    ></a>
+    
+
+
+    @*default Google Sign-In button:*@
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+
+</div>
+
+
+
+@*Load the Google Platform Library
+You must include the Google Platform Library on your web pages that integrate Google Sign-In.
+*@
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<script>
+    function onSignIn(googleUser) {
+  var profile = googleUser.getBasicProfile();
+  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+  console.log('Name: ' + profile.getName());
+  console.log('Image URL: ' + profile.getImageUrl());
+  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+}
+
+//Important: Do not use the Google IDs returned by getId() or the user's profile information to communicate the 
+//currently signed in user to your backend server. Instead, send ID tokens, which can be securely validated on the server.
+</script>
+
+
+@*Sign out a user
+You can enable users to sign out of your app without signing out of Google by adding a sign-out button or link to your site. To create a sign-out link, attach a function that calls the 
+GoogleAuth.signOut() method to the link's onclick event.*@
+<a href="#" onclick="signOut();">Sign out</a>
+<script>
+  function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
+  }
+</script>
